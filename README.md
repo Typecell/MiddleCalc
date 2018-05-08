@@ -1,0 +1,2 @@
+# MiddleCalc
+Arythmetical Mean calculator
