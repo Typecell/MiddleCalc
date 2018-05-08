@@ -1,0 +1,41 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+public class ArythmeticalMiddle {
+    public static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    public static ArrayList<Double> arr = new ArrayList<>();
+
+    public static void main(String[] args) {
+        System.out.println("Введите необходимое количество чисел. Оставьте строку пустой и нажмите \"Enter\", если хотите завершить ввод.");
+        initArray();
+        if (arr.size() > 0)
+            countMiddle();
+    }
+
+    public static void initArray() {
+        for (int i = 0; ; i++) {
+            try {
+                String in = reader.readLine();
+                if (in.equals(""))
+                    break;
+                String res = in.replaceAll(" ", "");
+                arr.add(Double.parseDouble(res));
+            } catch (IOException e) {
+            } catch (NumberFormatException e) {
+                System.out.println("Некорректный формат числа!");
+                break;
+            }
+        }
+    }
+
+    public static void countMiddle() {
+        double result = 0;
+        for (int i = 0; i < arr.size(); i++) {
+            result += arr.get(i);
+        }
+        result /= arr.size();
+        System.out.println("Среднее арифметическое: " + result);
+    }
+}
