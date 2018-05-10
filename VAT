@@ -1,24 +1,42 @@
-!!!!!!!!!!!!!! UP TO DATE! PRE-ALPHA VERSION! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+import java.awt.*;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.StringSelection;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
-public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.getDefault());
+public class NDS {
+    public static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    public static DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.getDefault());
+    public static String fNDS = null;
+    public static double sum = 0;
+
+    public static void main(String[] args) throws IOException {
         otherSymbols.setDecimalSeparator('.');
         DecimalFormat decimalFormat = new DecimalFormat("##0.00", otherSymbols);
-        String res = null;
+
         System.out.println("Введите число:");
-        double sum = Double.parseDouble(reader.readLine());
-        if (sum <= 0.0D) {
-            System.out.println("Введите число больше нуля");
+
+        for (;;) {
+            try {
+                String in = reader.readLine();
+                in = in.replaceAll(" ", "");
+                in = in.replaceAll(",", ".");
+                sum = Double.parseDouble(in);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Некорректный формат числа!");
+            }
         }
 
-        if (sum > 0.0D) {
-            double nds = sum / 1.18D * 0.18D;
-            String fNDS = decimalFormat.format(nds);
-            System.out.println("НДС: " + fNDS);
-            res = fNDS;
-        }
+        sum = sum / 1.18 * 0.18;
+        String fNDS = decimalFormat.format(sum);
+        System.out.println("НДС: " + fNDS);
 
-        StringSelection ss = new StringSelection(res);
+        StringSelection ss = new StringSelection(fNDS);
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, (ClipboardOwner)null);
     }
+}
